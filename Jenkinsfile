@@ -2,9 +2,7 @@ pipeline{
     environment { 
         registry = "harbor.ops.action.cloudz.co.kr/intern_test"
         registryCredential = 'dockerhub'
-        //repository = 'https://github.com/sloools/peacec-frontend.git'
-        //repositoryCredentialId = 'git-ssh-credential'
-        dockerImage = ''
+        dockerImage =''
     }
     agent {
         dockerfile true
@@ -17,7 +15,9 @@ pipeline{
         }
         stage('Build Image') {
             steps {
+                script{
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
         stage('Deploy Image') {
