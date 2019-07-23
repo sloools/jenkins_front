@@ -1,4 +1,4 @@
-podTemplate(label: 'jenkins-pipeline', containers: [
+podTemplate(label: 'jenkins', containers: [
     containerTemplate(
       name: 'docker',
       image: 'docker',
