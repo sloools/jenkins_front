@@ -1,5 +1,5 @@
 
-podTemplate(label: worker, ontainers: [
+podTemplate(label: 'worker', ontainers: [
     containerTemplate(
       name: 'docker',
       image: 'docker',
@@ -12,7 +12,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-  node(worker){
+  node('worker'){
 
     // User Custom Setting ////////////////////////////////////////////////////////////////////////////////////////////////
     def DEPLOY_TARGET = "alpha"
