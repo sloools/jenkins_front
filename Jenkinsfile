@@ -18,9 +18,6 @@ volumes:[
     def K8S_NAMESPACE = "serverless-console"
 
     def STAGE_EXECUTE_docker          = "true"
-    def STAGE_EXECUTE_kubectl_config  = "true"
-    def STAGE_EXECUTE_helm            = "true"
-    def STAGE_EXECUTE_kubectl_apply   = "true"
 
     def SERVICE_NAME = "serverless-console-frontend"
     def SERVICE_VERSION = "1.0.3-devworkflow"
