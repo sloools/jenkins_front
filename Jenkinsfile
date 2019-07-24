@@ -11,7 +11,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-  node ('master') {
+  node{
 
     // User Custom Setting ////////////////////////////////////////////////////////////////////////////////////////////////
     def DEPLOY_TARGET = "alpha"
