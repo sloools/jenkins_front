@@ -37,7 +37,8 @@ volumes:[
     def DOCKER_DOCKERFILE = './Dockerfile'
 
     // checkout sources
-    checkout scm
+    stage ('checkout scm')
+      checkout scm
 
     stage ('Docker Build/Push') {
       container('docker') {
