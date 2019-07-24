@@ -18,7 +18,7 @@ volumes:[
     def DEPLOY_TARGET = "alpha"
     def K8S_NAMESPACE = "serverless-console"
 
-    def STAGE_EXECUTE_docker          = "true"
+    def STAGE_EXECUTE_docker = "true"
 
     def SERVICE_NAME = "serverless-console-frontend"
     def SERVICE_VERSION = "1.0.3-devworkflow"
