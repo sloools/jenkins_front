@@ -1,4 +1,4 @@
-podTemplate(label: 'jenkins', containers: [
+podTemplate(label: 'master', containers: [
     containerTemplate(
       name: 'docker',
       image: 'docker',
@@ -11,7 +11,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-  node ('jenkins') {
+  node ('master') {
 
     // User Custom Setting ////////////////////////////////////////////////////////////////////////////////////////////////
     def DEPLOY_TARGET = "alpha"
