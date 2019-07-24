@@ -1,4 +1,4 @@
-podTemplate(label: 'master', containers: [
+podTemplate(containers: [
     containerTemplate(
       name: 'docker',
       image: 'docker',
