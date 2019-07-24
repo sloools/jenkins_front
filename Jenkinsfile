@@ -1,6 +1,5 @@
-def label = "worker-${UUID.randomUUID().toString()}"
 
-podTemplate(label: label, containers: [
+podTemplate(label: worker, ontainers: [
     containerTemplate(
       name: 'docker',
       image: 'docker',
@@ -13,7 +12,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-  node(label){
+  node(worker){
 
     // User Custom Setting ////////////////////////////////////////////////////////////////////////////////////////////////
     def DEPLOY_TARGET = "alpha"
