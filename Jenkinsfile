@@ -1,55 +1,38 @@
+def label = "kaniko-${UUID.randomUUID().toString()}"
 
-podTemplate(label: 'master', containers: [
-    containerTemplate(
-      name: 'docker',
-      image: 'docker/docker',
-      command: 'cat',
-      ttyEnabled: true,
-      alwaysPullImage: true
-    ),
-],
-volumes:[
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-]){
+podTemplate(name: 'kaniko', label: label, yaml: 
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - /busybox/cat
+    tty: true
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /root
+  volumes:
+  - name: jenkins-docker-cfg
+    projected:
+      sources:
+      - secret:
+          name: regcred
+          items:
+            - key: .dockerconfigjson
+              path: .docker/config.json
+  ) {
 
-  node('master'){
-
-    // User Custom Setting ////////////////////////////////////////////////////////////////////////////////////////////////
-    def DEPLOY_TARGET = "alpha"
-    def K8S_NAMESPACE = "serverless-console"
-
-    def STAGE_EXECUTE_docker = "true"
-
-    def SERVICE_NAME = "serverless-console-frontend"
-    def SERVICE_VERSION = "1.0.3-devworkflow"
-    def IMAGE_VERSION = "${SERVICE_VERSION}-${DEPLOY_TARGET}"
-    def SERVICE_HOST = "alpha.action.cloudz.co.kr"
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    def DOCKER_REGISTRY_URL = "harbor.ops.action.cloudz.co.kr"
-    def DOCKER_PROJECT = "intern_test"
-    def DOCKER_USERNAME = "admin"
-    def DOCKER_PASSWORD = "!Cloudev00"
-    def DOCKER_DOCKERFILE = './Dockerfile'
-
-    // checkout sources
-    stage ('checkout scm')
-      checkout scm
-
-    stage ('Docker Build/Push') {
-      container('docker') {
-        if("${STAGE_EXECUTE_docker}" == "true"){
-          println "Docker Build/Push Started"
-          retry(3) {
-            sh "docker login ${DOCKER_REGISTRY_URL} --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-            sh "docker build -f ${DOCKER_DOCKERFILE} -t ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT}/${SERVICE_NAME}:${IMAGE_VERSION} ."
-            sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT}/${SERVICE_NAME}:${IMAGE_VERSION}"
-          }
-        }else{
-          println "Docker Build/Push Passed"
-        }
+  node(label) {
+    stage('Build with Kaniko') {
+      git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+      container(name: 'kaniko', shell: '/busybox/sh') {
+          sh '''#!/busybox/sh
+          /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure-skip-tls-verify --destination=mydockerregistry:5000/myorg/myimage
+          '''
       }
     }
   }
