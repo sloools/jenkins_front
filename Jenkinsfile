@@ -1,6 +1,6 @@
 def label = "kaniko-${UUID.randomUUID().toString()}"
 
-podTemplate(name: 'kaniko', label: label, yaml: """
+podTemplate(name: 'kaniko', yaml: """
 kind: Pod
 metadata:
   name: kaniko
@@ -27,7 +27,7 @@ spec:
 """              
   ) {
 
-  node(label) {
+  node{
     stage('Build with Kaniko') {
       git 'git@github.com:sloools/jenkins_front.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
