@@ -38,7 +38,7 @@ spec:
     }
     stage ('Push') {
       container(name: 'kaniko') {
-      sh "docker push harbor.ops.action.cloudz.co.kr/intern_test/v1"
+      sh "docker push harbor.ops.action.cloudz.co.kr/intern_test/v2"
       }
     }
   }
