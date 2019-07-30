@@ -29,11 +29,9 @@ spec:
 
   node(POD_LABEL) {
     stage('Build with Kaniko') {
-      git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+      git 'https://github.com/sloools/jenkins-front'
       container(name: 'kaniko', shell: '/busybox/sh') {
-          sh '''#!/busybox/sh
-          /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure-skip-tls-verify --destination=mydockerregistry:5000/myorg/myimage
-          '''  
+          sh 'make build' 
     }
     }
   }
