@@ -1,6 +1,6 @@
 def label = "kaniko-${UUID.randomUUID().toString()}"
 
-podTemplate(name: 'kaniko', yaml: """
+podTemplate(name: 'kaniko', label: label, yaml: """
 kind: Pod
 metadata:
   name: kaniko
@@ -27,7 +27,7 @@ spec:
 """              
   ) {
 
-  node{
+  node(label) {
     stage('Build with Kaniko') {
       git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
