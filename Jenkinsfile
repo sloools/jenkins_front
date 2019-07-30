@@ -29,10 +29,10 @@ spec:
 
   node{
     stage('Build with Kaniko') {
-      git 'git@github.com:sloools/jenkins_front.git'
+      git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-          /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure-skip-tls-verify --destination=https://harbor.ops.action.cloudz.co.kr/intern_test/my-first-node
+          /kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure-skip-tls-verify --destination=mydockerregistry:5000/myorg/myimage
           '''
       }
     }
