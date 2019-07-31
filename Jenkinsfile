@@ -18,7 +18,7 @@ spec:
       - name: jenkins-docker-cfg
         mountPath: /root
    
-  volumes:
+  /*volumes:
   - name: jenkins-docker-cfg
     projected:
       sources:
@@ -26,7 +26,7 @@ spec:
           name: regcred
           items:
             - key: .dockerconfigjson
-              path: .docker/config.json
+              path: .docker/config.json*/
 """              
   ) {
 
