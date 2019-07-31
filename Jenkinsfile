@@ -27,7 +27,7 @@ spec:
 """              
   ) {
 
-  node(POD_LABEL) {
+  node(label) {
     stage('Build with Kaniko') {
       git 'https://github.com/sloools/jenkins-front'
       container(name: 'kaniko', shell: '/busybox/sh') {
