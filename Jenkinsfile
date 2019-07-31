@@ -11,10 +11,13 @@ spec:
     imagePullPolicy: Always
     command:
     - /busybox/cat
+    securityContext:
+      - runAsUser: 999
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /root
+   
   volumes:
   - name: jenkins-docker-cfg
     projected:
