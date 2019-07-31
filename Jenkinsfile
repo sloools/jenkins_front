@@ -15,6 +15,8 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /root
+  imagePullSecrets:
+  - name: regcred
   volumes:
   - name: jenkins-docker-cfg
     projected:
