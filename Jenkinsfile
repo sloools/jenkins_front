@@ -12,7 +12,7 @@ spec:
     command:
     - /busybox/cat
     securityContext:
-      - runAsUser: 999
+        runAsUser: 999
     tty: true
     volumeMounts:
       - name: jenkins-docker-cfg
